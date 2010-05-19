@@ -44,6 +44,7 @@
   };
   BrowserDetect.init();
 
+  if (!(BrowserDetect.browser == 'Mozilla' || BrowserDetect.browser == 'Explorer')) return;
   if (BrowserDetect.browser == 'Mozilla' && BrowserDetect.version >= 3.5) return;
   if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version >= 8) return;
 
