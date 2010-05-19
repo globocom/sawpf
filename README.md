@@ -17,7 +17,7 @@ Se o usuário estiver usando um browser antigo uma mensagem amigável vai
 pedir para atualizar o browser.
 
 Todos os scripts e imagens utilizados pelo sawpf são hospedados na 
-Globo.com e usa a melhor rede de distribuição de conteúdo do Brasil.
+Globo.com usando a melhor rede de distribuição de conteúdo do Brasil.
 
 
 
