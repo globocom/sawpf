@@ -40,6 +40,6 @@ Exemplo de utilização
       <body>
         <h1>Meu site</h1>
         ... todo o html do seu site ...
-        <script type="text/javascript" src="./src/1.0.js"></script>
+        <script type="text/javascript" src="http://sawpf.com/1.0.js" charset="utf-8"></script>
       </body>
     </html>
