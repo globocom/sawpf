@@ -1,3 +1,0 @@
-[submodule "vendor/unittest_js"]
-	path = vendor/unittest_js
-	url = http://github.com/tobie/unittest_js.git
