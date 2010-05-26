@@ -6,7 +6,7 @@ e são cheios de bugs, afetando a qualidade dos sites e fazendo com que os
 desenvolvedores gastem mais tempo para adaptar os sites a esses browsers
 obsoletos.
 
-"Salve a web, por favor" é um esforco para eliminar esses navegadores.
+"Salve a web, por favor" é um esforço para eliminar esses navegadores.
 
 
 
