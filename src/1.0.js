@@ -1,11 +1,11 @@
 (function(){
   var BrowserDetect = { // BrowserDetect adapted from http://www.quirksmode.org/js/detect.html
-    init: function () {
+    /** @constructor */ init: function () {
       this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
       this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || -1;
       this.OS = this.searchString(this.dataOS) || "an unknown OS";
     },
-    searchString: function (data) {
+    /** @constructor */ searchString: function (data) {
       for (var i=0; i<data.length; i++)  {
         var dataString = data[i].string;
         var dataProp = data[i].prop;
@@ -16,7 +16,7 @@
       }
       return false;
     },
-    searchVersion: function (dataString) {
+    /** @constructor */ searchVersion: function (dataString) {
       var index = dataString.indexOf(this.versionSearchString);
       if (index == -1) return false;
       return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
@@ -46,12 +46,12 @@
 
   if (!(BrowserDetect.browser == 'Firefox' || BrowserDetect.browser == 'Explorer')) return;
   if (BrowserDetect.browser == 'Firefox' && BrowserDetect.version >= 3.5) return;
-  if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version >= 8) return;
+  if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version >= 7) return;
 
-  var BASE_URL = base_url || 'http://sawpf.baixatudo.com.br';
-  var IE_BUTTON = '<a href="http://www.baixatudo.com.br/internet-explorer-8?utm_source=sawpf" class="sawpf-ie" title="Internet Explorer 8"><img src="' + BASE_URL + '/ie.gif" alt="Internet Explorer"/></a></li>';
-  var FIREFOX_BUTTON = '<a href="http://www.baixatudo.com.br/mozilla-firefox-3-6?utm_source=sawpf" class="sawpf-ff" title="Firefox 3.6"><img src="' + BASE_URL + '/ff.gif" alt="Firefox"/></a></li>';
-  var CHROME_BUTTON = '<a href="http://www.baixatudo.com.br/google-chrome-4?utm_source=sawpf" class="sawpf-gc" title="Google Chrome 4"><img src="' + BASE_URL + '/gc.gif" alt="Google Chrome"/></a></li>';
+  var BASE_URL = window['base_url'] || 'http://sawpf.com';
+  var IE_BUTTON = '<a href="http://www.baixatudo.com.br/internet-explorer-8?utm_source=sawpf&utm_medium=banner&utm_campaign=Explorer" class="sawpf-ie" title="Internet Explorer 8"><img src="' + BASE_URL + '/ie.gif" alt="Internet Explorer"/></a></li>';
+  var FIREFOX_BUTTON = '<a href="http://www.baixatudo.com.br/mozilla-firefox-3-6?utm_source=sawpf&utm_medium=banner&utm_campaign=Firefox" class="sawpf-ff" title="Firefox 3.6"><img src="' + BASE_URL + '/ff.gif" alt="Firefox"/></a></li>';
+  var CHROME_BUTTON = '<a href="http://www.baixatudo.com.br/google-chrome-4?utm_source=sawpf&utm_medium=banner&utm_campaign=Chrome" class="sawpf-gc" title="Google Chrome 4"><img src="' + BASE_URL + '/gc.gif" alt="Google Chrome"/></a></li>';
 
   var html = '<style type="text/css">';
   html += '#sawpf * {margin: 0; padding: 0; top: 0; line-height: 1em;}\n';
@@ -64,8 +64,11 @@
   html += '#sawpf img {border: none;}\n';
   html += '#sawpf a {border: none; background: #fff url(' + BASE_URL + '/sprite-bt.gif) no-repeat 0 0; display: block; height: 40px; outline: none; overflow: hidden; width: 150px;}\n';
   html += '#sawpf a:hover {background-position: 0 -40px;}\n';
+  html += '#sawpf a:active {background-position: 0 -80px;}\n';
+  html += '#sawpf a:active img {margin-top: 1px;}\n';
   html += '#sawpf #sawpf-close {background: url(' + BASE_URL + '/bt-close.gif) no-repeat 0 0; height: 15px; position: absolute; right: 5px; text-indent: -99999px; top: 5px; width: 15px;}\n';
   html += '#sawpf #sawpf-close:hover {background-position: 0 -15px;}\n';
+  html += '#sawpf #sawpf-close:active {background-position: 0 -30px;}\n';
   html += '</style>';
   html += '<div id="sawpf"><div><p><strong>Seu ';
   html += (BrowserDetect.browser == 'Explorer') ? "Internet Explorer" : "Firefox";
@@ -91,7 +94,7 @@
     document.getElementById('sawpf-close').onclick = function(){ document.getElementById('sawpf').style.display = "none"; return false;};
     document.getElementById('sawpf').style.display = 'block';
   } else {
-    if(!!jQuery('#glb-barra-widget').size()) {
+    if(!!document.getElementById('glb-barra-widget')) {
       jQuery('#glb-barra-widget').after(html);  
     } else {
       jQuery('body').prepend(html);  
@@ -100,5 +103,4 @@
     jQuery('#sawpf').slideDown();
   };
 })();
-
 
