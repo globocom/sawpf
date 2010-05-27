@@ -1,11 +1,11 @@
 require 'rubygems'
 require 'rake'
+require 'fileutils'
 
 task :compile do
-  `rm -rf pkg/dist`
-  `mkdir -p pkg/dist`
-  `cp src/*.gif pkg/dist`
-  `cp src/*.html pkg/dist`
-  `java -jar vendor/closure/compiler.jar --jscomp_warning undefinedVars --charset utf8 --compilation_level ADVANCED_OPTIMIZATIONS --js src/1.0.js --js_output_file pkg/dist/1.0.js --externs lib/jquery.externs.js`
+  FileUtils.mkdir_p "pkg/dist"
+  Dir["pkg/dist/*"].each{|file| FileUtils.rm file}
+  Dir["src/**/*"].each{|file| FileUtils.cp file, "pkg/dist"}
+  `java -jar vendor/closure/compiler.jar --jscomp_warning undefinedVars --charset utf8 --compilation_level ADVANCED_OPTIMIZATIONS --js src/1.0.js --js_output_file pkg/dist/1.0.js`
   `gzip -9 -c pkg/dist/1.0.js > pkg/dist/1.0.js.gz`
 end

@@ -1,4 +1,57 @@
 (function(){
+
+  // emile.js (c) 2009 Thomas Fuchs
+  // Licensed under the terms of the MIT license.
+  (function(emile, container){
+    var parseEl = document.createElement('div'),
+        props = ['height']; // removidas as outras propriedades do script original
+
+    function interpolate(source,target,pos){ return (source+(target-source)*pos).toFixed(3); }
+    function s(str, p, c){ return str.substr(p,c||1); }
+    function color(source,target,pos){
+      var i = 2, j, c, tmp, v = [], r = [];
+      while(j=3,c=arguments[i-1],i--)
+        if(s(c,0)=='r') { c = c.match(/\d+/g); while(j--) v.push(~~c[j]); } else {
+          if(c.length==4) c='#'+s(c,1)+s(c,1)+s(c,2)+s(c,2)+s(c,3)+s(c,3);
+          while(j--) v.push(parseInt(s(c,1+j*2,2), 16)); }
+      while(j--) { tmp = ~~(v[j+3]+(v[j]-v[j+3])*pos); r.push(tmp<0?0:tmp>255?255:tmp); }
+      return 'rgb('+r.join(',')+')';
+    };
+
+    function parse(prop){
+      var p = parseFloat(prop), q = prop.replace(/^[\-\d\.]+/,'');
+      return isNaN(p) ? { v: q, f: color, u: ''} : { v: p, f: interpolate, u: q };
+    };
+
+    function normalize(style){
+      var css, rules = {}, i = props.length, v;
+      parseEl.innerHTML = '<div style="'+style+'"></div>';
+      css = parseEl.childNodes[0].style;
+      while(i--) {
+        v = css[props[i]];
+        if(v) rules[props[i]] = parse(v);
+      };
+      return rules;
+    }; 
+
+    container[emile] = function(el, style, opts, after){
+      el = typeof el == 'string' ? document.getElementById(el) : el;
+      opts = opts || {};
+      var target = normalize(style), comp = el.currentStyle ? el.currentStyle : getComputedStyle(el, null),
+        prop, current = {}, start = +new Date, dur = opts.duration||200, finish = start+dur, interval,
+        easing = opts.easing || function(pos){ return (-Math.cos(pos*Math.PI)/2) + 0.5; };
+      for(prop in target) current[prop] = parse(comp[prop]);
+      interval = setInterval(function(){
+        var time = +new Date, pos = time>finish ? 1 : (time-start)/dur;
+        for(prop in target)
+          el.style[prop] = target[prop].f(current[prop].v,target[prop].v,easing(pos)) + target[prop].u;
+        if(time>finish) { clearInterval(interval); opts.after && opts.after(); after && setTimeout(after,1); }
+      },10);
+    };
+  })('emile', this);
+
+  // ---------------------------------------------------------------------------------------------------
+
   var BrowserDetect = { // BrowserDetect adapted from http://www.quirksmode.org/js/detect.html
     /** @constructor */ init: function () {
       this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
@@ -44,6 +97,8 @@
   };
   BrowserDetect.init();
 
+  // ---------------------------------------------------------------------------------------------------
+
   if (!(BrowserDetect.browser == 'Firefox' || BrowserDetect.browser == 'Explorer')) return;
   if (BrowserDetect.browser == 'Firefox' && BrowserDetect.version >= 3.5) return;
   if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version >= 7) return;
@@ -55,8 +110,8 @@
 
   var html = '<style type="text/css">';
   html += '#sawpf * {margin: 0; padding: 0; top: 0; line-height: 1em;}\n';
-  html += '#sawpf {display: none; background: #ffffd6; border-bottom: 1px solid #f0e4c3; border-top: 1px solid #f0e4c3; font-family: arial; margin: 0; padding: 9px 0; position: relative; width: 100%;}\n';
-  html += '#sawpf div {height: 40px; margin: 0 auto; width: 940px; padding: 0;}\n';
+  html += '#sawpf {height: 0; overflow: hidden; background: #ffffd6; border-bottom: 1px solid #f0e4c3; border-top: 1px solid #f0e4c3; font-family: arial; margin: 0; position: relative; width: 100%;}\n';
+  html += '#sawpf div {margin: 0 auto; width: 940px; padding: 9px 0;}\n';
   html += '#sawpf strong {color: #333; font-size: 14px;}\n';
   html += '#sawpf p {color: #666; float: left; font-size: 12px; line-height: 18px; margin: 2px 20px 0 0; text-align: left;}\n';
   html += '#sawpf ul {list-style: none}\n';
@@ -87,20 +142,23 @@
   html += '<a href="#" id="sawpf-close" title="Fechar">fechar</a>';
   html += '</div></div>';
 
-  if (typeof(jQuery) == 'undefined') {
-    var container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.insertBefore(container, document.body.children[0]);
-    document.getElementById('sawpf-close').onclick = function(){ document.getElementById('sawpf').style.display = "none"; return false;};
-    document.getElementById('sawpf').style.display = 'block';
+  var container = document.createElement('div');
+  container.innerHTML = html;
+
+  var barra_gcom = document.getElementById('glb-barra-widget');
+  if(!!barra_gcom) {
+    barra_gcom.parentNode.insertBefore(container, barra_gcom.nextSibling);
   } else {
-    if(!!document.getElementById('glb-barra-widget')) {
-      jQuery('#glb-barra-widget').after(html);  
-    } else {
-      jQuery('body').prepend(html);  
-    };
-    jQuery('#sawpf-close').click(function(){$('#sawpf').slideUp('slow');});
-    jQuery('#sawpf').slideDown();
+    document.body.insertBefore(container, document.body.children[0]);
   };
+
+  document.getElementById('sawpf-close').onclick = function() {
+    emile('sawpf', 'height: 0', {
+      duration: 300,
+      after: function(){document.getElementById('sawpf').style.display = "none";}
+    });
+    return false;
+  };
+  emile('sawpf', 'height: 58px', {duration: 500});
 })();
 
