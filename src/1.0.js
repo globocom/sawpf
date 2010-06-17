@@ -126,7 +126,7 @@
 
   var styleTag = document.createElement('style');
   styleTag.type = 'text/css';
-  if(!window.ActiveXObject) {
+  if(!window['ActiveXObject']) {
     styleTag.innerHTML = css;
   } else {
     styleTag.styleSheet.cssText = css;
@@ -157,7 +157,7 @@
   if(!!barra_gcom) {
     barra_gcom.parentNode.insertBefore(container, barra_gcom.nextSibling);
   } else {
-    document.body.insertBefore(container, document.body.children[0]);
+    document.body.insertBefore(container, document.body['children'][0]);
   };
 
   document.getElementById('sawpf-close').onclick = function() {
