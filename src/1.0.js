@@ -1,4 +1,4 @@
-(function(){
+(function(window, document, undefined){
 
   // emile.js (c) 2009 Thomas Fuchs
   // Licensed under the terms of the MIT license.
@@ -108,24 +108,32 @@
   var FIREFOX_BUTTON = '<a href="http://www.baixatudo.com.br/mozilla-firefox-3-6?utm_source=sawpf&utm_medium=banner&utm_campaign=Firefox" class="sawpf-ff" title="Firefox 3.6"><img src="' + BASE_URL + '/ff.gif" alt="Firefox"/></a></li>';
   var CHROME_BUTTON = '<a href="http://www.baixatudo.com.br/google-chrome-4?utm_source=sawpf&utm_medium=banner&utm_campaign=Chrome" class="sawpf-gc" title="Google Chrome 4"><img src="' + BASE_URL + '/gc.gif" alt="Google Chrome"/></a></li>';
 
-  var html = '<style type="text/css">';
-  html += '#sawpf * {margin: 0; padding: 0; top: 0; line-height: 1em;}\n';
-  html += '#sawpf {height: 0; overflow: hidden; background: #ffffd6; border-bottom: 1px solid #f0e4c3; border-top: 1px solid #f0e4c3; font-family: arial; margin: 0; position: relative; width: 100%;}\n';
-  html += '#sawpf div {margin: 0 auto; width: 940px; padding: 9px 0;}\n';
-  html += '#sawpf strong {color: #333; font-size: 14px;}\n';
-  html += '#sawpf p {color: #666; float: left; font-size: 12px; line-height: 18px; margin: 2px 20px 0 0; text-align: left;}\n';
-  html += '#sawpf ul {list-style: none}\n';
-  html += '#sawpf li {display: block; float: left; list-style: none; margin: 0 5px 0 0;}\n';
-  html += '#sawpf img {border: none;}\n';
-  html += '#sawpf a {border: none; background: #fff url(' + BASE_URL + '/sprite-bt.gif) no-repeat 0 0; display: block; height: 40px; outline: none; overflow: hidden; width: 150px;}\n';
-  html += '#sawpf a:hover {background-position: 0 -40px;}\n';
-  html += '#sawpf a:active {background-position: 0 -80px;}\n';
-  html += '#sawpf a:active img {margin-top: 1px;}\n';
-  html += '#sawpf #sawpf-close {background: url(' + BASE_URL + '/bt-close.gif) no-repeat 0 0; height: 15px; position: absolute; right: 5px; text-indent: -99999px; top: 5px; width: 15px;}\n';
-  html += '#sawpf #sawpf-close:hover {background-position: 0 -15px;}\n';
-  html += '#sawpf #sawpf-close:active {background-position: 0 -30px;}\n';
-  html += '</style>';
-  html += '<div id="sawpf"><div><p><strong>Seu ';
+  var css = '#sawpf * {margin: 0; padding: 0; top: 0; line-height: 1em;}\n';
+  css += '#sawpf {height: 0; overflow: hidden; background: #ffffd6; border-bottom: 1px solid #f0e4c3; border-top: 1px solid #f0e4c3; font-family: arial; margin: 0; position: relative; width: 100%;}\n';
+  css += '#sawpf div {margin: 0 auto; width: 940px; padding: 9px 0;}\n';
+  css += '#sawpf strong {color: #333; font-size: 14px;}\n';
+  css += '#sawpf p {color: #666; float: left; font-size: 12px; line-height: 18px; margin: 2px 20px 0 0; text-align: left;}\n';
+  css += '#sawpf ul {list-style: none}\n';
+  css += '#sawpf li {display: block; float: left; list-style: none; margin: 0 5px 0 0;}\n';
+  css += '#sawpf img {border: none;}\n';
+  css += '#sawpf a {border: none; background: #fff url(' + BASE_URL + '/sprite-bt.gif) no-repeat 0 0; display: block; height: 40px; outline: none; overflow: hidden; width: 150px;}\n';
+  css += '#sawpf a:hover {background-position: 0 -40px;}\n';
+  css += '#sawpf a:active {background-position: 0 -80px;}\n';
+  css += '#sawpf a:active img {margin-top: 1px;}\n';
+  css += '#sawpf #sawpf-close {background: url(' + BASE_URL + '/bt-close.gif) no-repeat 0 0; height: 15px; position: absolute; right: 5px; text-indent: -99999px; top: 5px; width: 15px;}\n';
+  css += '#sawpf #sawpf-close:hover {background-position: 0 -15px;}\n';
+  css += '#sawpf #sawpf-close:active {background-position: 0 -30px;}\n';
+
+  var styleTag = document.createElement('style');
+  styleTag.type = 'text/css';
+  if(!window.ActiveXObject) {
+    styleTag.innerHTML = css;
+  } else {
+    styleTag.styleSheet.cssText = css;
+  };
+  document.getElementsByTagName('head')[0].appendChild(styleTag);
+
+  var html = '<div id="sawpf"><div><p><strong>Seu ';
   html += (BrowserDetect.browser == 'Explorer') ? "Internet Explorer" : "Firefox";
   html += ' está desatualizado.</strong><br/>Para uma melhor visualização do site atualize-o ou escolha outro navegador.</p>';
   html += '<ul>';
@@ -160,5 +168,5 @@
     return false;
   };
   emile('sawpf', 'height: 58px', {duration: 500});
-})();
+})(this, document);
 
