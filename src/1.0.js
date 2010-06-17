@@ -109,8 +109,8 @@
   var CHROME_BUTTON = '<a href="http://www.baixatudo.com.br/google-chrome-4?utm_source=sawpf&utm_medium=banner&utm_campaign=Chrome" class="sawpf-gc" title="Google Chrome 4"><img src="' + BASE_URL + '/gc.gif" alt="Google Chrome"/></a></li>';
 
   var css = '#sawpf * {margin: 0; padding: 0; top: 0; line-height: 1em;}\n';
-  css += '#sawpf {height: 0; overflow: hidden; background: #ffffd6; border-bottom: 1px solid #f0e4c3; border-top: 1px solid #f0e4c3; font-family: arial; margin: 0; position: relative; width: 100%;}\n';
-  css += '#sawpf div {margin: 0 auto; width: 940px; padding: 9px 0;}\n';
+  css += '#sawpf {text-align: center; height: 0; overflow: hidden; background: #ffffd6; border-bottom: 1px solid #f0e4c3; border-top: 1px solid #f0e4c3; font-family: arial; margin: 0; position: relative; width: 100%;}\n';
+  css += '#sawpf div {text-align: left; margin: 0 auto; width: 940px; padding: 9px 0;}\n';
   css += '#sawpf strong {color: #333; font-size: 14px;}\n';
   css += '#sawpf p {color: #666; float: left; font-size: 12px; line-height: 18px; margin: 2px 20px 0 0; text-align: left;}\n';
   css += '#sawpf ul {list-style: none}\n';
