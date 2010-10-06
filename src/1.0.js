@@ -4,7 +4,7 @@
   // Licensed under the terms of the MIT license.
   (function(emile, container){
     var parseEl = document.createElement('div'),
-        props = ['marginTop']; // removidas as outras propriedades do script original
+        props = ['top']; // removidas as outras propriedades do script original
 
     function interpolate(source,target,pos){
       return (source+(target-source)*pos).toFixed(3);
@@ -83,7 +83,7 @@
   var SPRITE_URL = (window['base_url'] || 'http://sawpf.com') + '/sprite.gif';
 
   var css = '#sawpf * {margin: 0; padding: 0}' +
-    '#sawpf {text-align: center; margin-top: -60px; height: 58px; overflow: hidden; background: #ffffd6; border-width: 1px 0; border-color: #f0e4c3; border-style: solid; font-family: arial; position: relative; width: 100%}' +
+    '#sawpf {text-align: center; top: -60px; height: 58px; overflow: hidden; background: #ffffd6; border-width: 1px 0; border-color: #f0e4c3; border-style: solid; font-family: arial; position: relative; width: 100%}' +
     '#sawpf div {margin: 0 auto; width: 940px; padding: 9px 0}' +
     '#sawpf strong {color: #333; font-size: 14px}' +
     '#sawpf p {color: #666; float: left; font-size: 12px; line-height: 18px; margin: 2px 20px 0 0; text-align: left}' +
@@ -131,16 +131,16 @@
   if(barra_gcom) {
     barra_gcom.parentNode.insertBefore(container, barra_gcom.nextSibling);
   } else {
-    document.body.insertBefore(container, document.body['children'][0]);
+    document.body.insertBefore(container, document.body.firstChild);
   }
 
   document.getElementById('sawpf-close').onclick = function() {
-    emile('sawpf', 'margin-top: -60px', {
+    emile('sawpf', 'top: -60px', {
       duration: 300,
       after: function(){document.getElementById('sawpf').style.display = "none";}
     });
     return false;
   };
-  emile('sawpf', 'margin-top: 0', {duration: 500});
+  emile('sawpf', 'top: 0', {duration: 500});
 })(this, document, navigator);
 
