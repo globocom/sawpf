@@ -1,5 +1,5 @@
 (function(window, document, navigator){
-
+  
   // emile.js (c) 2009 Thomas Fuchs
   // Licensed under the terms of the MIT license.
   (function(emile, container){
@@ -42,12 +42,11 @@
   })('emile', this);
 
   // ---------------------------------------------------------------------------------------------------
-  
 
   var userAgent = navigator.userAgent;
   var vendor = navigator.vendor;
   var platform = navigator.platform;
-  
+
   var BrowserDetect = { // BrowserDetect adapted from http://www.quirksmode.org/js/detect.html
     /** @constructor */ init: function () {
       this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
@@ -71,12 +70,12 @@
     ]
   };
   BrowserDetect.init();
-  
+
   // ---------------------------------------------------------------------------------------------------
-  
+
   var isFirefox = (BrowserDetect.browser == 'Firefox');
   var isIE = (BrowserDetect.browser == 'Explorer');
-  
+
   if (!(isFirefox || isIE)) return;
   if (isFirefox && BrowserDetect.version >= 3.5) return;
   if (isIE && BrowserDetect.version >= 7) return;
