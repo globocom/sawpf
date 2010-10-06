@@ -11,8 +11,7 @@
     };
 
     function parse(prop){
-      var p = parseFloat(prop), q = prop.replace(/^[\-\d\.]+/,'');
-      return { v: p, f: interpolate, u: q };
+      return { v: parseFloat(prop), f: interpolate, u: prop.replace(/^[\-\d\.]+/,'') };
     };
 
     function normalize(style){
@@ -56,12 +55,8 @@
     },
     /** @constructor */ searchString: function (data) {
       for (var i=0; i<data.length; i++)  {
-        var dataString = data[i].string;
-        var dataProp = data[i].prop;
         this.versionSearchString = data[i].versionSearch || data[i].identity;
-        if (dataString) {
-          if (dataString.indexOf(data[i].subString) != -1) return data[i].identity;
-        } else if (dataProp) return data[i].identity;
+        if (userAgent.indexOf(data[i].subString) != -1) return data[i].identity;
       }
       return false;
     },
@@ -71,22 +66,14 @@
       return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
     },
     dataBrowser: [
-      {string: userAgent, subString: 'Chrome', identity: 'Chrome'},
-      {string: userAgent, subString: 'OmniWeb', versionSearch: 'OmniWeb/', identity: 'OmniWeb'},
-      {string: vendor, subString: 'Apple', identity: 'Safari', versionSearch: 'Version'},
-      {prop: window.opera, identity: 'Opera'},
-      {string: vendor, subString: 'iCab', identity: 'iCab'},
-      {string: vendor, subString: "KDE", identity: "Konqueror"},
-      {string: userAgent, subString: "Firefox", identity: "Firefox"},
-      {string: vendor, subString: "Camino", identity: "Camino"},
-      {string: userAgent, subString: "Netscape", identity: "Netscape"}, // for newer Netscapes (6+)
-      {string: userAgent, subString: "MSIE", identity: "Explorer", versionSearch: "MSIE"},
-      {string: userAgent, subString: "Gecko", identity: "Mozilla", versionSearch: "rv"},
-      {string: userAgent, subString: "Mozilla", identity: "Netscape", versionSearch: "Mozilla"}// for older Netscapes (4-)
+      {subString: "Firefox", identity: "Firefox"},
+      {subString: "MSIE", identity: "Explorer", versionSearch: "MSIE"}
     ]
   };
   BrowserDetect.init();
+  
   // ---------------------------------------------------------------------------------------------------
+  
   var isFirefox = (BrowserDetect.browser == 'Firefox');
   var isIE = (BrowserDetect.browser == 'Explorer');
   
