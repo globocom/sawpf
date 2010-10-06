@@ -137,7 +137,7 @@
   document.getElementById('sawpf-close').onclick = function() {
     emile('sawpf', 'top: -60px', {
       duration: 300,
-      after: function(){document.getElementById('sawpf').style.display = "none";}
+      after: function(){container.style.display = "none";}
     });
     return false;
   };
