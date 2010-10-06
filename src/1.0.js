@@ -130,7 +130,7 @@
     styleTag.innerHTML = css;
   } else {
     styleTag.styleSheet.cssText = css;
-  };
+  }
   document.getElementsByTagName('head')[0].appendChild(styleTag);
 
   var html = '<div id="sawpf"><div><p><strong>Seu ';
@@ -140,12 +140,11 @@
   if(BrowserDetect.browser == 'Explorer') {
     html += '<li>' + IE_BUTTON + '</li>';
     html += '<li>' + FIREFOX_BUTTON + '</li>';
-    html += '<li>' + CHROME_BUTTON + '</li>';
   } else {
     html += '<li>' + FIREFOX_BUTTON + '</li>';
     html += '<li>' + IE_BUTTON + '</li>';
-    html += '<li>' + CHROME_BUTTON + '</li>';
-  };
+  }
+  html += '<li>' + CHROME_BUTTON + '</li>';
   html += '</ul>';
   html += '<a href="#" id="sawpf-close" title="Fechar">fechar</a>';
   html += '</div></div>';
@@ -154,11 +153,11 @@
   container.innerHTML = html;
 
   var barra_gcom = document.getElementById('glb-barra-widget');
-  if(!!barra_gcom) {
+  if(barra_gcom) {
     barra_gcom.parentNode.insertBefore(container, barra_gcom.nextSibling);
   } else {
     document.body.insertBefore(container, document.body['children'][0]);
-  };
+  }
 
   document.getElementById('sawpf-close').onclick = function() {
     emile('sawpf', 'height: 0', {
