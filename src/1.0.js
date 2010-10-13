@@ -42,40 +42,20 @@
   })('emile', this);
 
   // ---------------------------------------------------------------------------------------------------
-
-  var userAgent = navigator.userAgent;
-  var vendor = navigator.vendor;
-  var platform = navigator.platform;
-
-  var BrowserDetect = { // BrowserDetect adapted from http://www.quirksmode.org/js/detect.html
-    /** @constructor */ init: function () {
-      this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
-      this.version = this.searchVersion(userAgent) || this.searchVersion(navigator.appVersion) || -1;
-    },
-    /** @constructor */ searchString: function (data) {
-      for (var i=0; i<data.length; i++)  {
-        this.versionSearchString = data[i].versionSearch || data[i].identity;
-        if (userAgent.indexOf(data[i].subString) != -1) return data[i].identity;
-      }
-      return false;
-    },
-    /** @constructor */ searchVersion: function (dataString) {
-      var index = dataString.indexOf(this.versionSearchString);
-      if (index == -1) return false;
-      return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
-    },
-    dataBrowser: [
-      {subString: "Firefox", identity: "Firefox"},
-      {subString: "MSIE", identity: "Explorer", versionSearch: "MSIE"}
-    ]
+  
+  // based on jquery's browser detection
+  var userAgent = navigator.userAgent.toLowerCase();
+  var BrowserDetect = {
+    version: parseFloat((userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, '0'])[1]),
+    msie: (/msie/).test(userAgent) && !(/opera/).test(userAgent),
+    firefox: (/mozilla/).test(userAgent) && !(/(compatible|webkit)/).test(userAgent)
   };
-  BrowserDetect.init();
 
   // ---------------------------------------------------------------------------------------------------
 
-  var isFirefox = (BrowserDetect.browser == 'Firefox');
-  var isIE = (BrowserDetect.browser == 'Explorer');
-
+  var isFirefox = (BrowserDetect.firefox);
+  var isIE = (BrowserDetect.msie);
+  
   if (!(isFirefox || isIE)) return;
   if (isFirefox && BrowserDetect.version >= 3.5) return;
   if (isIE && BrowserDetect.version >= 7) return;
@@ -116,7 +96,7 @@
   var CHROME_BUTTON = '<a href="http://www.baixatudo.com.br/google-chrome?utm_source=sawpf&utm_medium=banner&utm_campaign=Chrome" class="sawpf-gc" title="Google Chrome"><span>Google Chrome</span></a>';
 
   var html = '<div id="sawpf"><div><p><strong>Seu ' +
-    ((isIE) ? "Internet Explorer" : BrowserDetect.browser) +
+    ((isIE) ? "Internet Explorer" : "Firefox") +
     ' está desatualizado.</strong><br/>Para uma melhor visualização do site atualize-o ou escolha outro navegador.</p>' +
     '<ul><li>' +
     FIREFOX_BUTTON + '</li><li>' + IE_BUTTON + '</li><li>' + CHROME_BUTTON +
