@@ -1,5 +1,25 @@
 (function(window, document){
+
+  // ---------------------------------------------------------------------------------------------------
+
+  // based on jquery's browser detection
+  var userAgent = navigator.userAgent.toLowerCase();
+  var BrowserDetect = {
+    version: parseFloat((userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, '0'])[1]),
+    msie: (/msie/).test(userAgent) && !(/opera/).test(userAgent),
+    firefox: (/mozilla/).test(userAgent) && !(/(compatible|webkit)/).test(userAgent)
+  };
+  var isFirefox = (BrowserDetect.firefox);
+  var isIE = (BrowserDetect.msie);
+
+  // ---------------------------------------------------------------------------------------------------
   
+  if (!(isFirefox || isIE)) return;
+  if (isFirefox && BrowserDetect.version >= 3.5) return;
+  if (isIE && BrowserDetect.version >= 7) return;
+  
+  // ---------------------------------------------------------------------------------------------------
+
   // emile.js (c) 2009 Thomas Fuchs
   // Licensed under the terms of the MIT license.
   (function(emile, container){
@@ -42,22 +62,6 @@
   })('emile', this);
 
   // ---------------------------------------------------------------------------------------------------
-  
-  // based on jquery's browser detection
-  var userAgent = navigator.userAgent.toLowerCase();
-  var BrowserDetect = {
-    version: parseFloat((userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, '0'])[1]),
-    msie: (/msie/).test(userAgent) && !(/opera/).test(userAgent),
-    firefox: (/mozilla/).test(userAgent) && !(/(compatible|webkit)/).test(userAgent)
-  };
-  var isFirefox = (BrowserDetect.firefox);
-  var isIE = (BrowserDetect.msie);
-
-  // ---------------------------------------------------------------------------------------------------
-  
-  if (!(isFirefox || isIE)) return;
-  if (isFirefox && BrowserDetect.version >= 3.5) return;
-  if (isIE && BrowserDetect.version >= 7) return;
 
   var SPRITE_URL = (window['base_url'] || 'http://sawpf.com') + '/sprite.gif';
 
