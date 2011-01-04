@@ -13,11 +13,11 @@
   var isIE = (BrowserDetect.msie);
 
   // ---------------------------------------------------------------------------------------------------
-  
+
   if (!(isFirefox || isIE)) return;
   if (isFirefox && BrowserDetect.version >= 3.5) return;
   if (isIE && BrowserDetect.version >= 7) return;
-  
+
   // ---------------------------------------------------------------------------------------------------
 
   // emile.js (c) 2009 Thomas Fuchs
@@ -111,12 +111,7 @@
   container.id = 'sawpf'
   container.innerHTML = html;
 
-  var barra_gcom = document.getElementById('glb-barra-widget');
-  if(barra_gcom) {
-    barra_gcom.parentNode.insertBefore(container, barra_gcom.nextSibling);
-  } else {
-    document.body.insertBefore(container, document.body.firstChild);
-  }
+  document.body.insertBefore(container, document.body.firstChild);
 
   document.getElementById('sawpf-close').onclick = function() {
     emile(container, 'height: 0', {
