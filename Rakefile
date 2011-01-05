@@ -1,6 +1,5 @@
 require 'rubygems'
-require 'rake'
-require 'fileutils'
+require 'bundler/setup'
 
 task :default => :compile
 
