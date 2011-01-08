@@ -1,4 +1,4 @@
-(function(window, document){
+(function(window, document, navigator){
 
   // ---------------------------------------------------------------------------------------------------
 
@@ -11,6 +11,9 @@
   };
   var isFirefox = (BrowserDetect.firefox);
   var isIE = (BrowserDetect.msie);
+
+  // http://blog.orite.com.au/web_development/2009-06-30/jquery-ie-detection-issue-workaround/
+  if (isIE && BrowserDetect.version == 6 && /msie 8/.test(userAgent)) BrowserDetect.version = 8;
 
   // ---------------------------------------------------------------------------------------------------
 
@@ -121,5 +124,5 @@
     return false;
   };
   emile(container, 'height: 58px', {duration: 500});
-})(this, document);
+})(this, document, navigator);
 
