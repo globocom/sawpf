@@ -1,9 +1,10 @@
 require "rubygems"
-require "sinatra"
+require "bundler/setup"
+require "sinatra/base"
 
 class Application < Sinatra::Base
   set :static, true
-  set :public, File.expand_path("..", __FILE__)
+  set :public, "pkg/dist"
 end
 
 run Application

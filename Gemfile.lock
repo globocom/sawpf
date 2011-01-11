@@ -10,11 +10,11 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (>= 0.0.27)
       xpath (~> 0.1.2)
-    celerity (0.8.6)
+    celerity (0.8.7)
     childprocess (0.1.6)
       ffi (~> 0.6.3)
     configuration (1.2.0)
-    culerity (0.2.13)
+    culerity (0.2.14)
     evergreen (0.4.0)
       capybara (~> 0.4.0)
       json_pure (>= 1.0.0)
@@ -38,11 +38,13 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    shotgun (0.8)
+      rack (>= 1.0)
     sinatra (1.1.2)
       rack (~> 1.1)
       tilt (~> 1.2)
     tilt (1.2.1)
-    xpath (0.1.2)
+    xpath (0.1.3)
       nokogiri (~> 1.3)
 
 PLATFORMS
@@ -51,3 +53,5 @@ PLATFORMS
 DEPENDENCIES
   evergreen
   rake
+  shotgun
+  sinatra

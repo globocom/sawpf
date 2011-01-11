@@ -1,4 +1,6 @@
 source :rubygems
 
 gem 'rake'
-gem 'evergreen'
+gem 'sinatra', :require => 'sinatra/base'
+gem 'evergreen', :require => false
+gem 'shotgun', :require => false
