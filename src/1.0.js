@@ -13,7 +13,7 @@
   var isIE = (BrowserDetect.msie);
 
   // http://blog.orite.com.au/web_development/2009-06-30/jquery-ie-detection-issue-workaround/
-  if (isIE && BrowserDetect.version == 6 && /msie 8/.test(userAgent)) BrowserDetect.version = 8;
+  if (isIE && BrowserDetect.version == 6 && (/msie 8/.test(userAgent))) BrowserDetect.version = 8;
 
   // ---------------------------------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@
 
   // ---------------------------------------------------------------------------------------------------
 
-  var SPRITE_URL = (window['base_url'] || 'http://sawpf.com') + '/sprite.gif';
+  var SPRITE_URL = (window['base_url'] || 'http://sawpf.com') + '/imgs/1.0.gif';
 
   var css = '#sawpf * {margin: 0; padding: 0}' +
     '#sawpf {text-align: center; height: 0; overflow: hidden; background: #ffffd6; border-width: 1px 0; border-color: #f0e4c3; border-style: solid; font-family: arial; position: relative; width: 100%}' +
@@ -111,7 +111,7 @@
     '</div>';
 
   var container = document.createElement('div');
-  container.id = 'sawpf'
+  container.id = 'sawpf';
   container.innerHTML = html;
 
   document.body.insertBefore(container, document.body.firstChild);
