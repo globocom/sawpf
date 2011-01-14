@@ -5,7 +5,7 @@ require 'evergreen'
 task :default => :compile
 
 desc 'Compila o projeto em pkg/dist'
-task :compile do
+task :compile => 'spec:javascripts' do
   FileUtils.mkdir_p "pkg/dist"
   Dir["pkg/dist/*"].each{|file| FileUtils.rm_rf file}
   Dir["src/*"].each{|file| FileUtils.cp_r file, "pkg/dist"}
