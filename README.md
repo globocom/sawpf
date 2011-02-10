@@ -1,7 +1,7 @@
 Salve a web, por favor
 ===============================
 
-Navegadores velhos e desatualizados não evoluem junto com os padrões web 
+Navegadores velhos e desatualizados não evoluem junto com os padrões web
 e são cheios de bugs, afetando a qualidade dos sites e fazendo com que os
 desenvolvedores gastem mais tempo para adaptar os sites a esses browsers
 obsoletos.
@@ -16,7 +16,7 @@ Como funciona?
 Se o usuário estiver usando um browser antigo uma mensagem amigável vai
 pedir para atualizar o browser.
 
-Todos os scripts e imagens utilizados pelo sawpf são hospedados na 
+Todos os scripts e imagens utilizados pelo sawpf são hospedados na
 Globo.com usando a melhor rede de distribuição de conteúdo do Brasil.
 
 
@@ -40,6 +40,6 @@ Exemplo de utilização
       <body>
         <h1>Meu site</h1>
         ... todo o html do seu site ...
-        <script type="text/javascript" src="http://sawpf.com/1.0.js" charset="utf-8"></script>
+        <script type="text/javascript" src="http://sawpf.com/1.0.js"></script>
       </body>
     </html>
