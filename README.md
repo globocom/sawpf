@@ -26,7 +26,7 @@ Como usar?
 
 É só incluir no antes de fechar a tag body o seguinte código:
 
-    <script type="text/javascript" src="http://sawpf.com/1.0.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://sawpf.com/1.0.js"></script>
 
 
 Exemplo de utilização
