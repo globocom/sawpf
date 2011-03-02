@@ -38,8 +38,6 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
-    shotgun (0.8)
-      rack (>= 1.0)
     sinatra (1.1.2)
       rack (~> 1.1)
       tilt (~> 1.2)
@@ -53,5 +51,3 @@ PLATFORMS
 DEPENDENCIES
   evergreen
   rake
-  shotgun
-  sinatra

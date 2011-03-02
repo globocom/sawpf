@@ -13,6 +13,16 @@ task :compile => 'spec:javascripts' do
   puts "Compilado em pkg/dist"
 end
 
+task :server => :compile do
+  require 'webrick'
+  server = WEBrick::HTTPServer.new(:Port => 8080, :DocumentRoot => File.expand_path('pkg/dist', File.dirname(__FILE__)))
+  ['INT', 'TERM'].each do |signal|
+    trap(signal) { server.shutdown }
+  end
+  puts "Serving pkg/dist directory on http://127.0.0.1:8080\n"
+  server.start
+end
+
 namespace :spec do
   desc "Run JavaScript specs via Evergreen"
   task :javascripts do
