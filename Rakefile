@@ -13,6 +13,7 @@ task :compile => 'spec:javascripts' do
   puts "Compilado em pkg/dist"
 end
 
+desc "Run a development server."
 task :server => :compile do
   require 'webrick'
   server = WEBrick::HTTPServer.new(:Port => 3333, :DocumentRoot => './pkg/dist')
@@ -25,6 +26,7 @@ task :server => :compile do
   server.start
 end
 
+task :spec => 'spec:javascripts'
 namespace :spec do
   desc "Run JavaScript specs via Evergreen"
   task :javascripts do
