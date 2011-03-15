@@ -19,6 +19,7 @@ task :server => :compile do
   server.mount '/run.html', WEBrick::HTTPServlet::FileHandler, './run.html'
   server.mount '/lib', WEBrick::HTTPServlet::FileHandler, './lib'
   server.mount '/src', WEBrick::HTTPServlet::FileHandler, './src'
+  server.mount '/pkg', WEBrick::HTTPServlet::FileHandler, './pkg'
   ['INT', 'TERM'].each{|signal| trap(signal) { server.shutdown }}
   puts "Serving pkg/dist directory on http://127.0.0.1:3333\n"
   server.start
