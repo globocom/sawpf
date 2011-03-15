@@ -19,7 +19,7 @@
 
   if (!(isFirefox || isIE)) return;
   if (isFirefox && BrowserDetect.version >= 3.5) return;
-  if (isIE && BrowserDetect.version >= 7) return;
+  if (isIE && BrowserDetect.version >= 8) return;
 
   // ---------------------------------------------------------------------------------------------------
 

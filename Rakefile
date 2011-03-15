@@ -15,11 +15,12 @@ end
 
 task :server => :compile do
   require 'webrick'
-  server = WEBrick::HTTPServer.new(:Port => 8080, :DocumentRoot => File.expand_path('pkg/dist', File.dirname(__FILE__)))
-  ['INT', 'TERM'].each do |signal|
-    trap(signal) { server.shutdown }
-  end
-  puts "Serving pkg/dist directory on http://127.0.0.1:8080\n"
+  server = WEBrick::HTTPServer.new(:Port => 3333, :DocumentRoot => './pkg/dist')
+  server.mount '/run.html', WEBrick::HTTPServlet::FileHandler, './run.html'
+  server.mount '/lib', WEBrick::HTTPServlet::FileHandler, './lib'
+  server.mount '/src', WEBrick::HTTPServlet::FileHandler, './src'
+  ['INT', 'TERM'].each{|signal| trap(signal) { server.shutdown }}
+  puts "Serving pkg/dist directory on http://127.0.0.1:3333\n"
   server.start
 end
 
