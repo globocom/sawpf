@@ -15,12 +15,15 @@
   // http://blog.orite.com.au/web_development/2009-06-30/jquery-ie-detection-issue-workaround/
   if (isIE && BrowserDetect.version == 6 && (/msie 8/.test(userAgent))) BrowserDetect.version = 8;
 
+  // http://stackoverflow.com/questions/1328963/detect-ie8-compatibility-mode
+  if (isIE && BrowserDetect.version < 8 && document.documentMode) BrowserDetect.version = 8;
+
   // ---------------------------------------------------------------------------------------------------
 
   if (!(isFirefox || isIE)) return;
   if (isFirefox && BrowserDetect.version >= 3.5) return;
   if (isIE && BrowserDetect.version >= 8) return;
-
+  
   // ---------------------------------------------------------------------------------------------------
 
   // emile.js (c) 2009 Thomas Fuchs
