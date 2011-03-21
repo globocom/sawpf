@@ -1,3 +1,4 @@
+Cookie.unset('__sawpf_');
 fakeUserAgent('Mozilla/5.0 (X11; U; OpenBSD i386; en-US; rv:1.8.1.14) Gecko/20080821 Firefox/2.0.0.14');
 require('/src/1.0.js');
 
