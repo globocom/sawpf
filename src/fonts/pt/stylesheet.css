@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'PTSansNarrowRegular';
+    src: url('pt-narrowregular.eot');
+    src: url('pt-narrowregular.eot?iefix') format('eot'),
+         url('pt-narrowregular.woff') format('woff'),
+         url('pt-narrowregular.ttf') format('truetype'),
+         url('pt-narrowregular.svg#webfontpTBqgUZV') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansCaptionBold';
+    src: url('pt-captionbold.eot');
+    src: url('pt-captionbold.eot?iefix') format('eot'),
+         url('pt-captionbold.woff') format('woff'),
+         url('pt-captionbold.ttf') format('truetype'),
+         url('pt-captionbold.svg#webfont8zHvniZB') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansCaptionRegular';
+    src: url('pt-captionregular.eot');
+    src: url('pt-captionregular.eot?iefix') format('eot'),
+         url('pt-captionregular.woff') format('woff'),
+         url('pt-captionregular.ttf') format('truetype'),
+         url('pt-captionregular.svg#webfont7qk7wodx') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansBoldItalic';
+    src: url('pt-bolditalic.eot');
+    src: url('pt-bolditalic.eot?iefix') format('eot'),
+         url('pt-bolditalic.woff') format('woff'),
+         url('pt-bolditalic.ttf') format('truetype'),
+         url('pt-bolditalic.svg#webfont2oPncueb') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansBold';
+    src: url('pt-bold.eot');
+    src: url('pt-bold.eot?iefix') format('eot'),
+         url('pt-bold.woff') format('woff'),
+         url('pt-bold.ttf') format('truetype'),
+         url('pt-bold.svg#webfontaW07W6NV') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansItalic';
+    src: url('pt-italic.eot');
+    src: url('pt-italic.eot?iefix') format('eot'),
+         url('pt-italic.woff') format('woff'),
+         url('pt-italic.ttf') format('truetype'),
+         url('pt-italic.svg#webfontV5YcF68V') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansRegular';
+    src: url('pt-regular.eot');
+    src: url('pt-regular.eot?iefix') format('eot'),
+         url('pt-regular.woff') format('woff'),
+         url('pt-regular.ttf') format('truetype'),
+         url('pt-regular.svg#webfontakBUUg6U') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PTSansNarrowBold';
+    src: url('pt-narrowbold.eot');
+    src: url('pt-narrowbold.eot?iefix') format('eot'),
+         url('pt-narrowbold.woff') format('woff'),
+         url('pt-narrowbold.ttf') format('truetype'),
+         url('pt-narrowbold.svg#webfontSTdD4QCq') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
