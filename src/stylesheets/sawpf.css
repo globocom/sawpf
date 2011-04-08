@@ -1,0 +1,291 @@
+body {
+  margin: 0;
+  bottom: 0;
+  font-weight: normal;
+  height: 100%;
+}
+.header {
+  background-color: #fafafa;
+  border-top: 6px #505050 solid;
+  border-bottom: 1px #e3e3e3 solid;
+  height: 115px;
+  position: relative;
+  text-align: center;
+}
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  margin-top: -32px;
+}
+.forkme {
+  position: absolute;
+  right: 10%;
+}
+img {
+  border: 0;
+}
+.image {
+  position: relative;
+  left: 10%;
+  margin-top: -10px;
+}
+.explanation {
+  position: absolute;
+  right: 10%;
+  color: #505050;
+  font-family: arial, sans-serif;
+}
+.explanation span {
+  font-weight: bold;
+}
+.title {
+  font-size: 3em;
+  letter-spacing: -1px;
+  line-height: 1em;
+  font-family: Helvetica,"Helvetica Neue",Arial,sans-serif;
+  color: #ff9c00;
+  margin-bottom: 0;
+}
+.text {
+  font-size: 1.2em;
+}
+.instructions {
+  font-size: 0.875em;
+}
+.code span {
+  font-weight: normal;
+}
+.code {
+  background-color: #f9f9f9;
+  border: 1px solid #e7e7e7;
+  padding: 1.5em;
+  margin-top: 2em;
+  font-size: 0.875em;
+}
+.social-networks {
+  position: absolute;
+  width: 40%;
+  top: 50%;
+  left: 50%;
+}
+.social-networks div {
+  top: 50%;
+  position: absolute;
+}
+.like {
+  left: 5%;
+}
+.tweet {
+  left: 25%;
+}
+.button {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font: 20px/100% Arial, Helvetica, sans-serif;
+  padding: 0.17em 1.9em 0.22em;
+  -webkit-border-radius: .25em; 
+  -moz-border-radius: .25em;
+  border-radius: .25em;
+  letter-spacing: -1px;
+}
+.button:hover {
+  text-decoration: none;
+}
+.button:active {
+  position: relative;
+  top: 1px;
+}
+.white {
+  color: #5a5a5a;
+  border: solid 1px #cacaca;
+  background: #fff;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+  background: -moz-linear-gradient(top,  #fff,  #eeecec);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+.white:hover {
+  background: #ededed;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+  background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+.white:active {
+  color: #999;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+  background: -moz-linear-gradient(top,  #eeecec,  #fff);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+}
+.exemplo {
+  padding-top: 20px;
+  left: 10%;
+  position: relative;
+  text-align: center;
+}
+.sidebar div {
+  width: 400px;
+}
+.why {
+  left: 10%;
+}
+#tecnicamente {
+  position: relative;
+  float: right;
+}
+section {
+  text-align: center;
+  font-family: Helvetica,"Helvetica Neue",Arial,sans-serif;
+}
+section div span.column {
+  font-weight: normal;
+  font-size: 1.4em;
+  color: #9f9f9f;
+}
+section div {
+  text-align: left;
+}
+section div li {
+  display: inline;
+  list-style-type: none;
+  text-align: left;
+  float: left;
+  width: 14.1em;
+  border-top: 1px solid #ebebeb;
+}
+section div li.first {
+  padding: 2em 1.66em 0 0;
+}
+section div li.second {
+  margin: 0 1.66em 0 0;
+  padding-top: 2em;
+}
+section div li p {
+  font-size: 0.875em;
+  font-family: arial, sans-serif;
+}
+#section-title {
+  margin-bottom: 0.5em;
+}
+section div li span {
+  font-size: 1.2em;
+}
+section div ul {
+  padding: 0;
+  margin-top: 0.4em;
+}
+.quem-usa {
+  width: 100%;
+  background-color: #fafafa;
+  position: absolute;
+  font-family: arial, sans-serif;
+  border-top: 1px solid #fafafa;
+  border-bottom: 1px solid #fafafa;
+  text-align: center;
+  margin-top: 26em;
+  border-top: 1px #e3e3e3 solid;
+  border-bottom: 1px #e3e3e3 solid;
+}
+.quem-usa p {
+  position: relative;
+  right: 32%;
+  margin-top: 0.5em;
+}
+.quem-usa span {
+  font-weight: bold;
+}
+.quem-usa li {
+  display: inline;
+  list-style-type: none;
+  text-align: center;
+  float: left;
+  width: 11em;
+}
+.quem-usa ul {
+  text-align: center;
+}
+.footer {
+  margin-top: 40em;
+  text-align: center;
+}
+.footer p.title {
+  position: absolute;
+  right: 12%;
+}
+.downloads {
+  border: solid 1px #cacaca;
+  -webkit-border-radius: .25em;
+  -moz-border-radius: .25em;
+  border-radius: .25em;
+  position: absolute;
+  float: right;
+  margin-right: 10%;
+  margin-top: 10%;
+  font-family: arial, sans-serif;
+}
+
+.downloads a {
+  color: #484848;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.downloads li {
+  display: block;
+  text-align: left;
+  float: none;
+}
+.downloads ul {
+  text-align: left;
+  padding: 0;
+  list-style: none outside none;
+  padding: 0 9px 6px;
+}
+
+.downloads ul li .icone {
+  text-align: left;
+  padding: 0;
+  list-style: none outside none;
+  padding: 0 9px 6px;
+  float: left;
+  height: 32px;
+  margin: 0 0.6666em 0 0;
+  width: 32px;
+}
+
+.downloads ul li .nome-numeros-software {
+  float: left;
+  width: 208px;
+}
+
+.downloads ul li .nome-numeros-software .mais-baixado {
+  font-size: 1em;
+  height: 17px;
+  padding-top: 0;
+  width: 17.3333em;
+}
+
+.downloads ul li .nome-numeros-software .titulo-software {
+  display: block;
+  line-height: 16px;
+  margin: 0 0 1px;
+  overflow: hidden;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.downloads ul li .nome-numeros-software p {
+  background-image: url("/imgs/download.png");
+  background-repeat: no-repeat;
+  color: #666666;
+  font-size: 0.917em;
+  font-weight: normal;
+  padding-left: 16px;
+}
+
