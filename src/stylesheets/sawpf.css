@@ -4,6 +4,9 @@ body {
   font-weight: normal;
   height: 100%;
 }
+.content {
+  width: 960px;
+}
 .header {
   background-color: #fafafa;
   border-top: 6px #505050 solid;
@@ -179,19 +182,19 @@ section div ul {
 .quem-usa {
   width: 100%;
   background-color: #fafafa;
-  position: absolute;
+  position: relative;
   font-family: arial, sans-serif;
-  border-top: 1px solid #fafafa;
-  border-bottom: 1px solid #fafafa;
-  text-align: center;
   margin-top: 26em;
   border-top: 1px #e3e3e3 solid;
   border-bottom: 1px #e3e3e3 solid;
+  padding-bottom: 2em;
 }
 .quem-usa p {
-  position: relative;
-  right: 32%;
+  margin-bottom: 0.5em;
   margin-top: 0.5em;
+  position: relative;
+  right: -10%;
+  width: 960px;
 }
 .quem-usa span {
   font-weight: bold;
@@ -199,15 +202,16 @@ section div ul {
 .quem-usa li {
   display: inline;
   list-style-type: none;
-  text-align: center;
-  float: left;
+  margin-right: 50px;
   width: 11em;
 }
 .quem-usa ul {
-  text-align: center;
+  padding: 0;
+  position: relative;
+  right: -10%;
+  width: 960px;
 }
 .footer {
-  margin-top: 40em;
   text-align: center;
 }
 .footer p.title {
@@ -219,7 +223,7 @@ section div ul {
   -webkit-border-radius: .25em;
   -moz-border-radius: .25em;
   border-radius: .25em;
-  position: absolute;
+  position: relative;
   float: right;
   margin-right: 10%;
   margin-top: 10%;
@@ -257,7 +261,7 @@ section div ul {
 
 .downloads ul li .nome-numeros-software {
   float: left;
-  width: 208px;
+  width: 176px;
 }
 
 .downloads ul li .nome-numeros-software .mais-baixado {
