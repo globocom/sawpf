@@ -114,19 +114,16 @@ img {
 .instructions {
   font-size: 1em;
 }
-.code span {
-  font-weight: normal;
-}
 .code {
   background-color: #f9f9f9;
   border: 1px solid #e7e7e7;
-  padding: 1.5em;
+  padding: 1em;
   font-size: 1em;
 }
 
 section.why li {
   display: inline;
-  list-style-type: none; 
+  list-style-type: none;
   text-align: left;
   float: left;
   width: 212px;
@@ -179,7 +176,7 @@ span.column {
     width: 426px;
     padding-right: 22px;
   }
-  
+
   aside {
     display: table-cell;
     width: 494px;
@@ -214,7 +211,7 @@ section.sites {
   section.sites h3 {
     color: #FFF;
   }
-  
+
   section.sites a {
     background-position: center center;
     background-repeat: no-repeat;
@@ -223,7 +220,7 @@ section.sites {
     text-indent: -9999px;
     width: 150px;
   }
-  
+
 section.sites p {
   margin-top: 0.5em;
 }
