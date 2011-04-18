@@ -16,13 +16,13 @@ end
 desc "Run a development server."
 task :server => :compile do
   require 'webrick'
-  server = WEBrick::HTTPServer.new(:Port => 3333, :DocumentRoot => './pkg/dist')
+  server = WEBrick::HTTPServer.new(:Port => 3000, :DocumentRoot => './pkg/dist')
   server.mount '/run.html', WEBrick::HTTPServlet::FileHandler, './run.html'
   server.mount '/lib', WEBrick::HTTPServlet::FileHandler, './lib'
   server.mount '/src', WEBrick::HTTPServlet::FileHandler, './src'
   server.mount '/pkg', WEBrick::HTTPServlet::FileHandler, './pkg'
   ['INT', 'TERM'].each{|signal| trap(signal) { server.shutdown }}
-  puts "Serving pkg/dist directory on http://127.0.0.1:3333\n"
+  puts "Serving pkg/dist directory on http://127.0.0.1:3000\n"
   server.start
 end
 
