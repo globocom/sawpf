@@ -56,27 +56,13 @@ header {
   left: 0;
 }
 .logo {
-  margin-top: 28px;
+  margin-top: 24px;
+  float: left;
 }
-.forkme {
-  float: right;
-  margin-top: -98px;
-}
+
 .social-networks {
-  position: absolute;
-  width: 40%;
-  top: 50%;
-  left: 50%;
-}
-.social-networks div {
-  top: 50%;
-  position: absolute;
-}
-.like {
-  left: 5%;
-}
-.tweet {
-  left: 25%;
+  float: right;
+  margin-top: 26px;
 }
 
 img {
@@ -335,77 +321,98 @@ footer {
   border-bottom: 6px solid #505050;
   z-index: -1;
 }
+
 #globocom {
   background-image: url('/imgs/globocom.png');
 }
-  #globocom:hover {
-    background-image: url('/imgs/globocom-on.png');
-  }
+
+#globocom:hover {
+  background-image: url('/imgs/globocom-on.png');
+}
+
 #techtudo {
   background-image: url('/imgs/techtudo.png');
 }
-  #techtudo:hover {
-    background-image: url('/imgs/techtudo-on.png');
-  }
+
+#techtudo:hover {
+  background-image: url('/imgs/techtudo-on.png');
+}
+
 #g1 {
   background-image: url('/imgs/g1.png');
 }
-  #g1:hover {
-    background-image: url('/imgs/g1-on.png');
-  }
+
+#g1:hover {
+  background-image: url('/imgs/g1-on.png');
+}
+
 #receitas {
   background-image: url('/imgs/receitas.png');
 }
-  #receitas:hover {
-    background-image: url('/imgs/receitas-on.png');
-  }
+
+#receitas:hover {
+  background-image: url('/imgs/receitas-on.png');
+}
 
 #webastrologia {
   background-image: url('/imgs/webastrologia.png');
 }
-  #webastrologia:hover {
-    background-image: url('/imgs/webastrologia-on.png');
-  }
+
+#webastrologia:hover {
+  background-image: url('/imgs/webastrologia-on.png');
+}
 
 #jogatina {
   background-image: url('/imgs/jogatina.png');
 }
-  #jogatina:hover {
-    background-image: url('/imgs/jogatina-on.png');
-  }
+
+#jogatina:hover {
+  background-image: url('/imgs/jogatina-on.png');
+}
 
 #bibliaonline {
   background-image: url('/imgs/bibliaonline.png');
 }
-  #bibliaonline:hover {
-    background-image: url('/imgs/bibliaonline-on.png');
-  }
+
+#bibliaonline:hover {
+  background-image: url('/imgs/bibliaonline-on.png');
+}
 
 #cuponzal {
   background-image: url('/imgs/cuponzal.png');
 }
-  #cuponzal:hover {
-    background-image: url('/imgs/cuponzal-on.png');
-  }
+
+#cuponzal:hover {
+  background-image: url('/imgs/cuponzal-on.png');
+}
 
 #globoesportecom {
   background-image: url('/imgs/globoesportecom.png');
 }
-  #globoesportecom:hover {
-    background-image: url('/imgs/globoesportecom-on.png');
-  }
+
+#globoesportecom:hover {
+  background-image: url('/imgs/globoesportecom-on.png');
+}
 
 #webdemocracia {
   background-image: url('/imgs/webdemocracia.png');
 }
-  #webdemocracia:hover {
-    background-image: url('/imgs/webdemocracia-on.png');
-  }
+
+#webdemocracia:hover {
+  background-image: url('/imgs/webdemocracia-on.png');
+}
 
 #etc {
   background-image: url('/imgs/etc.png');
 }
-  #etc:hover {
-    background-image: url('/imgs/etc-on.png');
-  }
 
+#etc:hover {
+  background-image: url('/imgs/etc-on.png');
+}
+
+.forkme {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
