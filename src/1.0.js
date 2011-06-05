@@ -1,5 +1,7 @@
 (function(window, document, navigator){
 
+  if (document.getElementById('sawpf')) return;
+
   // ---------------------------------------------------------------------------------------------------
 
   // based on jquery's browser detection
