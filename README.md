@@ -1,4 +1,4 @@
-Salve a web, por favor
+﻿Salve a web, por favor
 ===============================
 
 Navegadores velhos e desatualizados não evoluem junto com os padrões web
@@ -26,20 +26,21 @@ Como usar?
 
 É só incluir no antes de fechar a tag body o seguinte código:
 
-    <script type="text/javascript" src="http://sawpf.com/1.0.js"></script>
+    <script defer src="http://sawpf.com/1.0.js"></script>
 
 
 Exemplo de utilização
 ---------------------
 
-    <html>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
       <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta charset="utf-8" />
         <title>Título</title>
       </head>
       <body>
         <h1>Meu site</h1>
         ... todo o html do seu site ...
-        <script type="text/javascript" src="http://sawpf.com/1.0.js"></script>
+        <script defer src="http://sawpf.com/1.0.js"></script>
       </body>
     </html>
