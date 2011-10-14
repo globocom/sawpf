@@ -26,7 +26,7 @@ Como usar?
 
 É só incluir no antes de fechar a tag body o seguinte código:
 
-    <script src="http://sawpf.com/1.0.js"></script>
+    <script defer src="http://sawpf.com/1.0.js"></script>
 
 
 Exemplo de utilização
@@ -41,6 +41,6 @@ Exemplo de utilização
       <body>
         <h1>Meu site</h1>
         ... todo o html do seu site ...
-        <script src="http://sawpf.com/1.0.js"></script>
+        <script defer src="http://sawpf.com/1.0.js"></script>
       </body>
     </html>
