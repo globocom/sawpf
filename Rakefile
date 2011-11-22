@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'evergreen'
+require 'evergreen/tasks'
 
 task :default => :compile
 
@@ -26,13 +26,6 @@ task :server => :compile do
   server.start
 end
 
-task :spec => 'spec:javascripts'
-namespace :spec do
-  desc "Run JavaScript specs via Evergreen"
-  task :javascripts do
-    result = Evergreen::Suite.new(File.dirname(__FILE__)).run
-    Kernel.exit(1) unless result
-  end
+task :environment do
 end
-
 
