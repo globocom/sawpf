@@ -14,7 +14,7 @@ task :compile => 'spec:javascripts' do
 end
 
 desc "Run a development server."
-task :server => :compile do
+task :server do
   require 'webrick'
   server = WEBrick::HTTPServer.new(:Port => 3000, :DocumentRoot => './pkg/dist')
   server.mount '/run.html', WEBrick::HTTPServlet::FileHandler, './run.html'
