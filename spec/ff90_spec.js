@@ -27,7 +27,7 @@ describe('Firefox 9.0', function() {
   it('should not show sawpf bar', function() {
     fakeUserAgent('Mozilla/5.0 (Windows NT 6.2; rv:9.0.1) Gecko/20100101 Firefox/9.0.1');
     loadSawpf();
-    expect(document.getElementById('sawpf')).toExist();
+    expect(document.getElementById('sawpf')).not.toExist();
   });
 
 });
