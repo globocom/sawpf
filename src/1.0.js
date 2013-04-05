@@ -9,7 +9,7 @@
   var BrowserDetect = {
     version: parseFloat((userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, 0])[1]),
     msie: (/msie/).test(userAgent) && !(/opera/).test(userAgent),
-    firefox: (/mozilla/).test(userAgent) && !(/(compatible|webkit)/).test(userAgent)
+    firefox: (/firefox/).test(userAgent)||((/mozilla/).test(userAgent) && !(/(compatible|webkit)/).test(userAgent))
   };
   var isFirefox = (BrowserDetect.firefox);
   var isIE = (BrowserDetect.msie);
@@ -27,7 +27,7 @@
   // ---------------------------------------------------------------------------------------------------
 
   if (!(isFirefox || isIE)) return;
-  if (isFirefox && BrowserDetect.version >= 9) return;
+  if (isFirefox && BrowserDetect.version >= 17) return;
   if (isIE && BrowserDetect.version >= 9) return;
 
   // ---------------------------------------------------------------------------------------------------
