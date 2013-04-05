@@ -7,7 +7,7 @@
   // based on jquery's browser detection
   var userAgent = navigator.userAgent.toLowerCase();
   var BrowserDetect = {
-    version: parseFloat((userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, '0'])[1]),
+    version: parseFloat((userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, 0])[1]),
     msie: (/msie/).test(userAgent) && !(/opera/).test(userAgent),
     firefox: (/mozilla/).test(userAgent) && !(/(compatible|webkit)/).test(userAgent)
   };
@@ -18,16 +18,20 @@
   if (isIE && BrowserDetect.version == 6 && (/msie 8/.test(userAgent))) BrowserDetect.version = 8;
 
   // http://stackoverflow.com/questions/1328963/detect-ie8-compatibility-mode
-  if (isIE && BrowserDetect.version < 8 && document.documentMode) BrowserDetect.version = 8;
-
+  // http://social.msdn.microsoft.com/Forums/en-US/netfxjscript/thread/ae715fd2-1ddd-46f7-8c26-9aed6b2103f1/
+  if (isIE && BrowserDetect.version < 9 && document.documentMode < 9) {
+      var trident = parseInt((userAgent.match(/.+trident\/(\d+)\..*/) || [0,0])[1], 10);
+      BrowserDetect.version = trident < 5 ? 8 : 9;
+  }
+  
   // ---------------------------------------------------------------------------------------------------
 
   if (!(isFirefox || isIE)) return;
   if (isFirefox && BrowserDetect.version >= 9) return;
-  if (isIE && BrowserDetect.version >= 8) return;
+  if (isIE && BrowserDetect.version >= 9) return;
 
   // ---------------------------------------------------------------------------------------------------
-
+  
   // Cookie control
   var Cookie = {
     set: function(name, value, msecs){
@@ -172,5 +176,6 @@
     return false;
   };
   emile(container, 'height: 58px', {duration: 500});
+  
 })(this, document, navigator);
 

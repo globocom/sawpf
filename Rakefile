@@ -26,6 +26,12 @@ task :server do
   server.start
 end
 
+desc "Run a test server."
+task :server_test do
+  require 'evergreen/server'
+  Evergreen::Server.new.serve
+end
+
 task :environment do
 end
 

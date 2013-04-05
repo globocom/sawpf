@@ -6,6 +6,31 @@ function fakeUserAgent(value) {
   });
 }
 
+window.sawpfLoaded = false
+
+function loadSawpf() {
+  window.sawpfLoaded = false
+  var el = document.getElementById('sawpf');
+  if (el) {
+      el.parentNode.removeChild(el);
+  }
+  var g=document.createElement('script');
+  var s=document.getElementsByTagName('script')[0];
+  g.onload = function(){
+      window.sawpfLoaded = true;
+  };
+  g.src='/src/1.0.js';
+  s.parentNode.insertBefore(g,s);
+}
+
+function afterSawpfLoaded(callback) {
+  loadSawpf();
+  waitsFor(function(){ return window.sawpfLoaded });
+  runs(function() {
+    callback()
+  });
+}
+
 // Cookie control
 var Cookie = {
   set: function(name, value, msecs){

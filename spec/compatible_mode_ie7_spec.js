@@ -1,10 +1,55 @@
 Cookie.unset('__sawpf_');
-fakeUserAgent('Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.0)');
-document['documentMode'] = 5;
-require('/src/1.0.js');
 
-describe('Internet Explorer 8.0/9.0 com user-agent do IE7 por causa do compatibility mode', function() {
-  it('should not show sawpf bar', function() {
-    expect(document.getElementById('sawpf')).not.toExist();
+describe('Compatibility mode:', function() {
+    
+  describe('using IE7 on IE8', function() {
+    it('should show sawpf bar', function() {
+      fakeUserAgent('Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.0)');
+      document.documentMode = 7;
+      afterSawpfLoaded(function(){
+          expect(document.getElementById('sawpf')).toExist();
+      })
+    });
   });
+  
+  describe('using IE7 on IE9', function() {
+    it('should not show sawpf bar', function() {
+      fakeUserAgent('Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0)');
+      document.documentMode = 7;
+      afterSawpfLoaded(function(){
+          expect(document.getElementById('sawpf')).not.toExist();
+      });
+    });
+  });
+    
+  describe('using IE8 on IE9', function() {
+    it('should not show sawpf bar', function() {
+      fakeUserAgent('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/5.0)');
+      document.documentMode = 8;
+      afterSawpfLoaded(function(){
+          expect(document.getElementById('sawpf')).not.toExist();
+      });
+    });
+  });
+  
+  describe('using IE7 on IE10', function() {
+      it('should not show sawpf bar', function() {
+        fakeUserAgent('Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/6.0)');
+        document.documentMode = 7;
+        afterSawpfLoaded(function(){
+            expect(document.getElementById('sawpf')).not.toExist();
+        });
+      });
+    });
+      
+    describe('using IE8 on IE10', function() {
+      it('should not show sawpf bar', function() {
+        fakeUserAgent('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/6.0)');
+        document.documentMode = 8;
+        afterSawpfLoaded(function(){
+            expect(document.getElementById('sawpf')).not.toExist();
+        });
+      });
+    });
+  
 });
