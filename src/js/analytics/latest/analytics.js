@@ -1448,6 +1448,40 @@ function call (callback) {
   callback(document.body);
 }
 });
+require.register("timoxley-next-tick/index.js", function(exports, require, module){
+if (typeof setImmediate == 'function') {
+  module.exports = function(ƒ){ setImmediate(ƒ) }
+}
+// legacy node.js
+else if (typeof process != 'undefined' && typeof process.nextTick == 'function') {
+  module.exports = process.nextTick
+}
+// fallback for other environments / postMessage behaves badly on IE8
+else if (typeof window == 'undefined' || window.ActiveXObject || !window.postMessage) {
+  module.exports = function(ƒ){ setTimeout(ƒ) };
+} else {
+  var q = [];
+
+  window.addEventListener('message', function(){
+    var i = 0;
+    while (i < q.length) {
+      try { q[i++](); }
+      catch (e) {
+        q = q.slice(i);
+        window.postMessage('tic!', '*');
+        throw e;
+      }
+    }
+    q.length = 0;
+  }, true);
+
+  module.exports = function(fn){
+    if (!q.length) window.postMessage('tic!', '*');
+    q.push(fn);
+  }
+}
+
+});
 require.register("yields-prevent/index.js", function(exports, require, module){
 
 /**
@@ -1514,7 +1548,7 @@ module.exports = Analytics;
 function Analytics (Providers) {
   var self = this;
 
-  this.VERSION = '0.9.17';
+  this.VERSION = '0.10.3';
 
   each(Providers, function (Provider) {
     self.addProvider(Provider);
@@ -1624,7 +1658,7 @@ extend(Analytics.prototype, {
     each(providers, function (key, options) {
       var Provider = self._providers[key];
       if (!Provider) throw new Error('Couldnt find a provider named "'+key+'"');
-      self.providers.push(new Provider(options, ready));
+      self.providers.push(new Provider(options, ready, self));
     });
 
     // Identify and track any `ajs_uid` and `ajs_event` parameters in the URL.
@@ -1678,7 +1712,7 @@ extend(Analytics.prototype, {
    * @param {Object} options (optional) - Settings for the identify call.
    *
    * @param {Function} callback (optional) - A function to call after a small
-   * timeout, giving the identify time to make requests.
+   * timeout, giving the identify call time to make requests.
    */
 
   identify : function (userId, traits, options, callback) {
@@ -1730,6 +1764,76 @@ extend(Analytics.prototype, {
     // If we should alias, go ahead and do it.
     // if (alias) this.alias(userId);
 
+    if (callback && type(callback) === 'function') {
+      setTimeout(callback, this.timeout);
+    }
+  },
+
+
+
+  /**
+   * Group
+   *
+   * Groups multiple users together under one "account" or "team" or "company".
+   * Acts on the currently identified user, so you need to call identify before
+   * calling group. For example:
+   *
+   *     analytics.identify('4d3ed089fb60ab534684b7e0', {
+   *         name  : 'Achilles',
+   *         email : 'achilles@segment.io',
+   *         age   : 23
+   *     });
+   *
+   *     analytics.group('5we93je3889fb60a937dk033', {
+   *         name              : 'Acme Co.',
+   *         numberOfEmployees : 42,
+   *         location          : 'San Francisco'
+   *     });
+   *
+   * @param {String} groupId - The ID you recognize the group by.
+   *
+   * @param {Object} properties (optional) - A dictionary of properties you know
+   * about the group. Things like `numberOfEmployees`, `location`, etc.
+   *
+   * @param {Object} options (optional) - Settings for the group call.
+   *
+   * @param {Function} callback (optional) - A function to call after a small
+   * timeout, giving the group call time to make requests.
+   */
+
+  group : function (groupId, properties, options, callback) {
+    if (!this.initialized) return;
+
+    // Allow for optional arguments.
+    if (type(options) === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    if (type(properties) === 'function') {
+      callback = properties;
+      properties = undefined;
+    }
+
+    // Clone `properties` before we manipulate it, so we don't do anything bad,
+    // and back it by an empty object so that providers can assume it exists.
+    properties = clone(properties) || {};
+
+    // Convert dates from more types of input into Date objects.
+    if (properties.created) properties.created = newDate(properties.created);
+
+    // Call `group` on all of our enabled providers that support it.
+    each(this.providers, function (provider) {
+      if (provider.group && isEnabled(provider, options)) {
+        var args = [groupId, clone(properties), clone(options)];
+        if (provider.ready) {
+          provider.group.apply(provider, args);
+        } else {
+          provider.enqueue('group', args);
+        }
+      }
+    });
+
+    // If we have a callback, call it after a small timeout.
     if (callback && type(callback) === 'function') {
       setTimeout(callback, this.timeout);
     }
@@ -2049,20 +2153,27 @@ module.exports = Provider;
  * ready to handle analytics calls.
  */
 
-function Provider (options, ready) {
+function Provider (options, ready, analytics) {
   var self = this;
+
+  // Store the reference to the global `analytics` object.
+  this.analytics = analytics;
 
   // Make a queue of `{ method : 'identify', args : [] }` to unload once ready.
   this.queue = [];
   this.ready = false;
 
   // Allow for `options` to only be a string if the provider has specified
-  // a default `key`, in which case convert `options` into a dictionary.
+  // a default `key`, in which case convert `options` into a dictionary. Also
+  // allow for it to be `true`, like in Optimizely's case where there is no need
+  // for any default key.
   if (type(options) !== 'object') {
     if (type(options) === 'string' && this.key) {
       var key = options;
       options = {};
       options[this.key] = key;
+    } else if (options === true) {
+      options = {};
     } else {
       throw new Error('Couldnt resolve options.');
     }
@@ -3381,8 +3492,10 @@ module.exports = [
   require('./mixpanel'),
   require('./multi-google-analytics'),
   require('./olark'),
+  require('./optimizely'),
   require('./perfect-audience'),
   require('./pingdom'),
+  require('./preact'),
   require('./qualaroo'),
   require('./quantcast'),
   require('./sentry'),
@@ -3427,17 +3540,25 @@ module.exports = Provider.extend({
     load('https://api.intercom.io/api/js/library.js', ready);
   },
 
-  identify : function (userId, traits, context) {
+  identify : function (userId, traits, options) {
     // Intercom requires a `userId` to associate data to a user.
     if (!userId) return;
 
     // Don't do anything if we just have traits.
     if (!this.booted && !userId) return;
 
+    options = options || {};
+
+    // Intercom specific settings could be lowercase or upper-case
+    var intercom = options.intercom || options.Intercom || {};
+
     // Pass traits directly in to Intercom's `custom_data`.
-    var settings = extend({
-      custom_data : traits || {}
-    }, (context && context.intercom) ? context.intercom : {});
+    var settings = { custom_data : traits || {} };
+
+    // pick specific options from the options.intercom
+    if (intercom.increments) settings.increments = increments;
+    if (intercom.user_hash) settings.user_hash = intercom.user_hash;
+    if (intercom.userHash) settings.user_hash = intercom.userHash;
 
     // They need `created_at` as a Unix timestamp (seconds).
     if (traits && traits.created) {
@@ -3964,27 +4085,29 @@ module.exports = Provider.extend({
   initialize : function (options, ready) {
 
     window._gaq = window._gaq || [];
-    window._gaq.push(['_setAccount', options.homeTrackingId]);
-    window._gaq.push(['b._setAccount', options.produtoTrackingId]);
-		
-
+    
+		window._gaq.push(['_setAccount', options.homeTrackingId]);
     // Apply a bunch of optional settings.
     if (options.homeDomain) {
       window._gaq.push(['_setDomainName', options.homeDomain]);
+    }    
+		if (type(options.homeSiteSpeedSampleRate) === 'number') {
+      window._gaq.push(['_setSiteSpeedSampleRate', options.homeSiteSpeedSampleRate]);
     }
+
+    window._gaq.push(['b._setAccount', options.produtoTrackingId]);
     if (options.produtoDomain) {
       window._gaq.push(['b._setDomainName', options.produtoDomain]);
     }
+    if (type(options.produtoSiteSpeedSampleRate) === 'number') {
+      window._gaq.push(['b._setSiteSpeedSampleRate', options.produtoSiteSpeedSampleRate]);
+    }
+
+
     if (options.enhancedLinkAttribution) {
       var protocol = 'https:' === document.location.protocol ? 'https:' : 'http:';
       var pluginUrl = protocol + '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
       window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
-    }
-    if (type(options.homeSiteSpeedSampleRate) === 'number') {
-      window._gaq.push(['_setSiteSpeedSampleRate', options.homeSiteSpeedSampleRate]);
-    }
-    if (type(options.produtoSiteSpeedSampleRate) === 'number') {
-      window._gaq.push(['b._setSiteSpeedSampleRate', options.produtoSiteSpeedSampleRate]);
     }
     if (options.anonymizeIp) {
       window._gaq.push(['_gat._anonymizeIp']);
@@ -3994,10 +4117,6 @@ module.exports = Provider.extend({
       if (canon) path = url.parse(canon).pathname;
       
 			this.pageview(path);
-	    
-			if (options.produtoInitialPageview) {
-				this.produtoPageview(path);
-			}
     }
 
     // URLs change if DoubleClick is on.
@@ -4038,9 +4157,6 @@ module.exports = Provider.extend({
 
   pageview : function (url) {
     window._gaq.push(['_trackPageview', url]);
-  },
-	
-  produtoPageview : function (url) {
     window._gaq.push(['b._trackPageview', url]);
   }
 });
@@ -4157,6 +4273,69 @@ module.exports = Provider.extend({
 
 });
 });
+require.register("analytics/src/providers/optimizely.js", function(exports, require, module){
+// https://www.optimizely.com/docs/api
+
+var each      = require('each')
+  , nextTick  = require('next-tick')
+  , Provider  = require('../provider');
+
+
+module.exports = Provider.extend({
+
+  name : 'Optimizely',
+
+  defaults : {
+    // Whether to replay variations into other enabled integrations as traits.
+    variations : true
+  },
+
+  initialize : function (options, ready, analytics) {
+    // Create the `optimizely` object in case it doesn't exist already.
+    // https://www.optimizely.com/docs/api#function-calls
+    window.optimizely = window.optimizely || [];
+
+    // If the `variations` option is true, replay our variations on the next
+    // tick to wait for the entire library to be ready for replays.
+    if (options.variations) {
+      var self = this;
+      nextTick(function () { self.replay(); });
+    }
+
+    // Optimizely should be on the page already, so it's always ready.
+    ready();
+  },
+
+  track : function (event, properties) {
+    // Optimizely takes revenue as cents, not dollars.
+    if (properties && properties.revenue) properties.revenue = properties.revenue * 100;
+
+    window.optimizely.push(['trackEvent', event, properties]);
+  },
+
+  replay : function () {
+    // Make sure we have access to Optimizely's `data` dictionary.
+    var data = window.optimizely.data;
+    if (!data) return;
+
+    // Grab a few pieces of data we'll need for replaying.
+    var experiments       = data.experiments
+      , variationNamesMap = data.state.variationNamesMap;
+
+    // Create our traits object to add variations to.
+    var traits = {};
+
+    // Loop through all the experiement the user has been assigned a variation
+    // for and add them to our traits.
+    each(variationNamesMap, function (experimentId, variation) {
+      traits['Experiment: ' + experiments[experimentId].name] = variation;
+    });
+
+    this.analytics.identify(traits);
+  }
+
+});
+});
 require.register("analytics/src/providers/perfect-audience.js", function(exports, require, module){
 // https://www.perfectaudience.com/docs#javascript_api_autoopen
 
@@ -4210,6 +4389,69 @@ module.exports = Provider.extend({
 
     // We've replaced the original snippet loader with our own load method.
     load('//rum-static.pingdom.net/prum.min.js', ready);
+  }
+
+});
+});
+require.register("analytics/src/providers/preact.js", function(exports, require, module){
+// http://www.preact.io/api/javascript
+
+var Provider = require('../provider')
+  , isEmail  = require('is-email')
+  , load     = require('load-script');
+
+module.exports = Provider.extend({
+
+  name : 'Preact',
+
+  key : 'projectCode',
+
+  defaults : {
+    projectCode    : null
+  },
+
+  initialize : function (options, ready) {
+    var _lnq = window._lnq = window._lnq || [];
+    _lnq.push(["_setCode", options.projectCode]);
+
+    load('//d2bbvl6dq48fa6.cloudfront.net/js/ln-2.3.min.js');
+    ready();
+  },
+
+  identify : function (userId, traits) {
+    // Don't do anything if we just have traits, because Preact
+    // requires a `userId`.
+    if (!userId) return;
+
+    // If there wasn't already an email and the userId is one, use it.
+    if (!traits.email && isEmail(userId)) traits.email = userId;
+
+    // Swap the `created` trait to the `created_at` that Preact needs
+    // and convert it from milliseconds to seconds.
+    if (traits.created) {
+      traits.created_at = Math.floor(traits.created/1000);
+      delete traits.created;
+    }
+
+    window._lnq.push(['_setPersonData', {
+      name : traits.name,
+      email : traits.email,
+      uid : userId,
+      properties : traits
+    }]);
+  },
+
+  track : function (event, properties) {
+    properties || (properties = {});
+
+    var personEvent = {
+      name : event,
+      target_id : properties.target_id,
+      note : properties.note,
+      revenue : properties.revenue
+    }
+
+    window._lnq.push(['_logEvent', personEvent, properties]);
   }
 
 });
@@ -4342,6 +4584,7 @@ require.register("analytics/src/providers/snapengage.js", function(exports, requ
 // http://help.snapengage.com/installation-guide-getting-started-in-a-snap/
 
 var Provider = require('../provider')
+  , isEmail  = require('is-email')
   , load     = require('load-script');
 
 
@@ -4357,6 +4600,12 @@ module.exports = Provider.extend({
 
   initialize : function (options, ready) {
     load('//commondatastorage.googleapis.com/code.snapengage.com/js/' + options.apiKey + '.js', ready);
+  },
+
+  // Set the email in the chat window if we have it.
+  identify : function (userId, traits, options) {
+    if (!traits.email && !isEmail(userId)) return;
+    window.SnapABug.setUserEmail(traits.email || userId);
   }
 
 });
@@ -4701,6 +4950,8 @@ require.alias("component-type/index.js", "segmentio-new-date/deps/type/index.js"
 require.alias("segmentio-on-body/index.js", "analytics/deps/on-body/index.js");
 require.alias("component-each/index.js", "segmentio-on-body/deps/each/index.js");
 require.alias("component-type/index.js", "component-each/deps/type/index.js");
+
+require.alias("timoxley-next-tick/index.js", "analytics/deps/next-tick/index.js");
 
 require.alias("yields-prevent/index.js", "analytics/deps/prevent/index.js");
 
