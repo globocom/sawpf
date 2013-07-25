@@ -24,7 +24,7 @@ Globo.com usando a melhor rede de distribuição de conteúdo do Brasil.
 Como usar?
 ----------
 
-É só incluir no antes de fechar a tag body o seguinte código:
+É só incluir o seguinte código antes de fechar a tag body:
 
     <script defer src="http://sawpf.com/1.0.js"></script>
 
