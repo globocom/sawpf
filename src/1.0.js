@@ -4,11 +4,20 @@
 
   // ---------------------------------------------------------------------------------------------------
 
+  var browserVersion = function() {
+      var version = (userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, 0])[1];
+      if(version===0) {
+          //Para internet explorer 11 e superiores:
+          version = (userAgent.match(/.+rv:([\d.]+)/) || 0)[1];
+      }
+      return parseFloat(version);
+  };
+  
   // based on jquery's browser detection
   var userAgent = navigator.userAgent.toLowerCase();
   var BrowserDetect = {
-    version: parseFloat((userAgent.match(/.+(?:firefox|ie)[\/: ]([\d.]+)/) || [0, 0])[1]),
-    msie: (/msie/).test(userAgent) && !(/opera/).test(userAgent),
+    version: browserVersion(),
+    msie: ((/msie/).test(userAgent)||(/trident/).test(userAgent)) && !(/opera/).test(userAgent),
     firefox: (/firefox/).test(userAgent)||((/mozilla/).test(userAgent) && !(/(compatible|webkit)/).test(userAgent))
   };
   var isFirefox = (BrowserDetect.firefox);
